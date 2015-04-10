@@ -1,0 +1,21 @@
+Player 1 Card Count = 2
+Player 2 Card Count = 2
+Round 1
+Player 1 Victor
+Player 1 Card Count = 3
+Player 2 Card Count = 1
+Round 2
+Player 1 Victor
+Player 1 Card Count = 2
+Player 2 Card Count = 2
+Round 1
+Player 2 Victor
+Player 1 Card Count = 1
+Player 2 Card Count = 3
+Round 2
+Player 2 Victor
+Cards Shuffled
+Player 1 Card Count = 26
+Player 2 Card Count = 26
+Round 1
+Player 2 Victor

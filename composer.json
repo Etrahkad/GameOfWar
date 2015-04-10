@@ -1,0 +1,17 @@
+{
+    "name": "root/game-of-war",
+    "description": "I declare War",
+    "license": "GNU General Public License, version 3",
+    "authors": [
+        {
+            "name": "Tim Dubois",
+            "email": "timjdubois@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Application\\": "Application/"
+        }
+    }
+}
