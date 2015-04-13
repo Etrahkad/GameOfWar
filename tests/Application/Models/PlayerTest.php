@@ -83,10 +83,23 @@ class PlayerTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(2, $this->object->getDeck()->getCount());
         
         $pile = new \Application\Structures\Pile();
-        $pile->placeOnPile($deckArray[2]);
-        $pile->placeOnPile($deckArray[3]);
+        $pile->placeOnPile($deckArray[51]);
+        $pile->placeOnPile($deckArray[24]);
         
         $this->object->winCards($pile->getPile());
+        
+        $string_array = array();
+        
+        foreach ($this->object->getDeck()->getArray() as $card) {
+            $string_array[] = $card->__toString();
+        }
+        
+        $new_array = array();
+        while ($this->object->getDeck()->isDeckEmpty()) {
+            $new_array[] = $this->object->playCard()->__toString();
+        }
+        
+        $this->assertEquals($string_array, $new_array);
         
         $this->assertEquals(4, $this->object->getDeck()->getCount());
     }

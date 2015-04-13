@@ -11,7 +11,14 @@ use \Application\Structures\CardStack;
  * @author tdubois
  */
 class Pile {
+    /**
+     * @var \Application\Structures\CardStack
+     */
     protected $deck;
+    /**
+     * @var \Application\Structures\CardStack
+     */
+    protected $deckPermCards;
     
     public function __construct() {
         $this->deck = new CardStack();
@@ -30,5 +37,14 @@ class Pile {
     public function placeOnPile(Card $card) {
         $this->deck->addCard($card);
         return $this;
+    }
+    
+    public function __toString() {
+        $string_array = [];
+        
+        foreach($this->deck->getArray() as $card) {
+            $string_array[] = "$card";
+        }
+        return "Pile: \n" . implode("\n", $string_array);
     }
 }

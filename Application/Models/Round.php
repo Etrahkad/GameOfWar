@@ -128,6 +128,9 @@ class Round {
             }
         }
         
+        $endString[] = "Player 1" . $this->player1Hand;
+        $endString[] = "Player 2" . $this->player2Hand;
+        
         return implode("\n", $endString);
     }
 }

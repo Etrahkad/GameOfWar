@@ -42,8 +42,9 @@ class GameTest extends \PHPUnit_Framework_TestCase {
     }
     
     public function testPlayRoundVictor1() {
-        $pile1 = $this->round->getPile(1);
-        $pile2 = $this->round->getPile(2);
+        //echo "Test testPlayRoundVictor1\n";
+        $pile1 = new \Application\Structures\Pile();
+        $pile2 = new \Application\Structures\Pile();
         
         $player1 = $this->object->getPlayer(1);
         $player2 = $this->object->getPlayer(2);
@@ -70,9 +71,12 @@ class GameTest extends \PHPUnit_Framework_TestCase {
         $victor = $this->object->playRound($round2);
         $this->assertSame(1, $round2->getVictorNumber());
         $this->assertEquals(4, $player1->getDeck()->getCount());
+        Log::outputLog('./testPlayRoundVictor1.txt');
+        Log::clearLog();
     }
     
-    public function testPlayRoundVictor2() {
+    public function testWarDraw() {
+        //echo "Test Draw\n";
         $pile1 = $this->round->getPile(1);
         $pile2 = $this->round->getPile(2);
         
@@ -80,51 +84,135 @@ class GameTest extends \PHPUnit_Framework_TestCase {
         $player2 = $this->object->getPlayer(2);
         
         $pile1->placeOnPile($this->deck->getArray()[4]); 
-        $pile1->placeOnPile($this->deck->getArray()[2]); 
+        $pile1->placeOnPile($this->deck->getArray()[4]); 
+        $pile1->placeOnPile($this->deck->getArray()[4]); 
         
         $player1->setDeck($pile1->getPile());
         
-        $pile2->placeOnPile($this->deck->getArray()[5]); 
-        $pile2->placeOnPile($this->deck->getArray()[6]); 
+        $pile2->placeOnPile($this->deck->getArray()[4]); 
+        $pile2->placeOnPile($this->deck->getArray()[4]); 
+        $pile2->placeOnPile($this->deck->getArray()[4]);
         
         $player2->setDeck($pile2->getPile());
         
-        $this->assertEquals(2, $player1->getDeck()->getCount());
-        $this->assertEquals(2, $player2->getDeck()->getCount());
-        
-        $victor = $this->object->playRound();
-        $this->assertEquals(1, $player1->getDeck()->getCount());
+        $this->assertEquals(3, $player1->getDeck()->getCount());
+        $this->assertEquals(3, $player2->getDeck()->getCount());
         
         $victor = $this->object->playRound();
         $this->assertEquals(0, $player1->getDeck()->getCount());
+        $this->assertEquals(0, $player2->getDeck()->getCount());
+        
+        Log::outputLog('./gameisadraw.txt');
+        Log::clearLog();
     }
     
     public function testWarVictor1() {
-        $pile1 = $this->round->getPile(1);
-        $pile2 = $this->round->getPile(2);
+        $round = new \Application\Models\Round();
+        
+        //echo "Test testWarVictor1\n";
+        $pile1 = new \Application\Structures\Pile();
+        $pile2 = new \Application\Structures\Pile();
         
         $player1 = $this->object->getPlayer(1);
         $player2 = $this->object->getPlayer(2);
         
-        $pile1->placeOnPile($this->deck->getArray()[4]); 
-        $pile1->placeOnPile($this->deck->getArray()[4]); 
-        $pile1->placeOnPile($this->deck->getArray()[4]); 
-        $pile1->placeOnPile($this->deck->getArray()[6]); 
+        $pile1->placeOnPile($this->deck->getArray()[4]);
+        $pile1->placeOnPile($this->deck->getArray()[4]);
+        $pile1->placeOnPile($this->deck->getArray()[4]);
+        $pile1->placeOnPile($this->deck->getArray()[4]);
+        $pile1->placeOnPile($this->deck->getArray()[6]);
         
         $player1->setDeck($pile1->getPile());
         
-        $pile2->placeOnPile($this->deck->getArray()[4]); 
-        $pile2->placeOnPile($this->deck->getArray()[4]); 
-        $pile2->placeOnPile($this->deck->getArray()[4]); 
-        $pile2->placeOnPile($this->deck->getArray()[4]); 
+        $pile2->placeOnPile($this->deck->getArray()[4]);
+        $pile2->placeOnPile($this->deck->getArray()[4]);
+        $pile2->placeOnPile($this->deck->getArray()[4]);
+        $pile2->placeOnPile($this->deck->getArray()[4]);
+        $pile2->placeOnPile($this->deck->getArray()[4]);
         
         $player2->setDeck($pile2->getPile());
         
-        $this->assertEquals(2, $player1->getDeck()->getCount());
-        $this->assertEquals(2, $player2->getDeck()->getCount());
+        $this->assertEquals(5, $player1->getDeck()->getCount());
+        $this->assertEquals(5, $player2->getDeck()->getCount());
         
-        $victor = $this->object->playRound();
-        $this->assertEquals(1, $player1->getDeck()->getCount());
+        $victor = $this->object->playRound($round);
+        $this->assertEquals(10, $player1->getDeck()->getCount());
+        $this->assertEquals(0, $player2->getDeck()->getCount());
+        
+        Log::outputLog('./testWarVictor1.txt');
+        Log::clearLog();
+    }
+    
+    public function testWarVictor2() {
+        $round = new \Application\Models\Round();
+        
+        //echo "Test testWarVictor1\n";
+        $pile1 = new \Application\Structures\Pile();
+        $pile2 = new \Application\Structures\Pile();
+        
+        $player1 = $this->object->getPlayer(1);
+        $player2 = $this->object->getPlayer(2);
+        
+        $pile1->placeOnPile($this->deck->getArray()[4]);
+        $pile1->placeOnPile($this->deck->getArray()[4]);
+        $pile1->placeOnPile($this->deck->getArray()[4]);
+        $pile1->placeOnPile($this->deck->getArray()[4]);
+        $pile1->placeOnPile($this->deck->getArray()[6]);
+        
+        $player1->setDeck($pile1->getPile());
+        
+        $pile2->placeOnPile($this->deck->getArray()[4]);
+        $pile2->placeOnPile($this->deck->getArray()[4]);
+        $pile2->placeOnPile($this->deck->getArray()[4]);
+        $pile2->placeOnPile($this->deck->getArray()[4]);
+        $pile2->placeOnPile($this->deck->getArray()[8]);
+        
+        $player2->setDeck($pile2->getPile());
+        
+        $this->assertEquals(5, $player1->getDeck()->getCount());
+        $this->assertEquals(5, $player2->getDeck()->getCount());
+        
+        $victor = $this->object->playRound($round);
+        $this->assertEquals(0, $player1->getDeck()->getCount());
+        $this->assertEquals(10, $player2->getDeck()->getCount());
+        
+        Log::outputLog('./testWarVictor2.txt');
+        Log::clearLog();
+    }
+    
+    public function testWarVictor1RunOutOfCards() {
+        $round = new \Application\Models\Round();
+        
+        //echo "Test testWarVictor1\n";
+        $pile1 = new \Application\Structures\Pile();
+        $pile2 = new \Application\Structures\Pile();
+        
+        $player1 = $this->object->getPlayer(1);
+        $player2 = $this->object->getPlayer(2);
+        
+        $pile1->placeOnPile($this->deck->getArray()[4]);
+        $pile1->placeOnPile($this->deck->getArray()[4]);
+        $pile1->placeOnPile($this->deck->getArray()[4]);
+        $pile1->placeOnPile($this->deck->getArray()[4]);
+        $pile1->placeOnPile($this->deck->getArray()[6]);
+        
+        $player1->setDeck($pile1->getPile());
+        
+        $pile2->placeOnPile($this->deck->getArray()[4]);
+        $pile2->placeOnPile($this->deck->getArray()[4]);
+        $pile2->placeOnPile($this->deck->getArray()[4]);
+        $pile2->placeOnPile($this->deck->getArray()[4]);
+        
+        $player2->setDeck($pile2->getPile());
+        
+        $this->assertEquals(5, $player1->getDeck()->getCount());
+        $this->assertEquals(4, $player2->getDeck()->getCount());
+        
+        $victor = $this->object->playRound($round);
+        $this->assertSame(1, $round->getVictorNumber());
+        
+        Log::outputLog('./testWarVictor1RunOutOfCards.txt');
+        Log::clearLog();
     }
     
     /**
@@ -150,23 +238,11 @@ class GameTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(1, $found); // Victory should be player 1
         $round->setRoundNumber(1);
         
-//        var_dump(array(
-//            $round->__toString(),
-//            $pile1->getPile()->getTopCard()->__toString(),
-//            $pile2->getPile()->getTopCard()->__toString()
-//        ));
-        
         $pile1->placeOnPile($card2);
         $pile2->placeOnPile($card3);
         $found = $this->object->calculateRoundWinner($round);
         
         $round->setRoundNumber(2);
-//        var_dump(array(
-//            $round->__toString(),
-//            $pile1->getPile()->getTopCard()->__toString(),
-//            $pile2->getPile()->getTopCard()->__toString()
-//        ));
-        
         $this->assertEquals(2, $found); // Victory should be player 2
         
         $pile1->placeOnPile($card2);
@@ -174,11 +250,6 @@ class GameTest extends \PHPUnit_Framework_TestCase {
         $found = $this->object->calculateRoundWinner($round);
         
         $round->setRoundNumber(3);
-//        var_dump(array(
-//            $round->__toString(),
-//            $pile1->getPile()->getTopCard()->__toString(),
-//            $pile2->getPile()->getTopCard()->__toString()
-//        ));
         
         $this->assertEquals(0, $found); // Victory should be a draw
     }
@@ -189,7 +260,7 @@ class GameTest extends \PHPUnit_Framework_TestCase {
      */
     public function testRun() {
         $this->object->run();
+        
+        Log::outputLog('testRun.txt');
     }
-    
-
 }

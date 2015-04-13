@@ -18,7 +18,7 @@ class Log {
         self::$currentLog = array();
     }
     
-    public static function outputLog($filePath = '/tmp/output.txt') {
+    public static function outputLog($filePath = './output.txt') {
         $txt_file = implode("\n", self::$currentLog);
         
         file_put_contents($filePath, $txt_file);

@@ -12,7 +12,7 @@ use Application\Structures\Container;
  */
 abstract class CardContainer extends Container {
     /**
-     * @var array
+     * @var \Application\Models\Card[]
      */
     protected $cards = array();
     

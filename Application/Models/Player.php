@@ -50,7 +50,8 @@ class Player {
      * @return \Application\Models\Player
      */
     public function winCards(CardContainer $cards) {
-        foreach ($cards->getArray() as $card) {
+        $card_array = array_reverse($cards->getArray());
+        foreach ($card_array as $card) {
             $this->deck->addCard($card);
         }
         return $this;
