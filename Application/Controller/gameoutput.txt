@@ -1,3 +1,0 @@
-Cards Shuffled
-Player 1 card count = 26
-Player 2 card count = 26
