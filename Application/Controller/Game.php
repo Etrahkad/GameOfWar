@@ -80,7 +80,7 @@ class Game {
         $round = new Round();
         
         $continueGame = true;
-        while($continueGame && $this->roundNumber < 300000) {
+        while($continueGame && $this->roundNumber < 400000) {
             $continueGame = $this->playRound($round);
             $round->getPile(1)->getPile()->clearDeck();
             $round->getPile(2)->getPile()->clearDeck();
@@ -210,8 +210,8 @@ class Game {
                     $this->player1->winCards($player2Pile->getPile());
                     break;
                 case 2:
-                    $this->player2->winCards($player1Pile->getPile());
                     $this->player2->winCards($player2Pile->getPile());
+                    $this->player2->winCards($player1Pile->getPile());
                     break;
             }
         } else {
