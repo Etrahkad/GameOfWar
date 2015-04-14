@@ -43,6 +43,11 @@ abstract class CardContainer extends Container {
         shuffle($this->cards);
     }
     
+    public function clearDeck() {
+        unset($this->cards);
+        $this->cards = array();
+    }
+    
     /**
      * 
      * @return true|false
