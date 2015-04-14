@@ -10,17 +10,28 @@ namespace Application\Controller;
 class Log {
     protected static $currentLog = array();
     
+    protected static $outputLocation = './output.txt';
+    
     public static function log($message) {
         self::$currentLog[] = $message;
+        echo $message, "\n";
     }
     
     public static function clearLog() {
         self::$currentLog = array();
     }
     
-    public static function outputLog($filePath = './output.txt') {
-        $txt_file = implode("\n", self::$currentLog);
+    public static function outputLog($filePath = null) {
+        if ($filePath) {
+            self::$outputLocation = $filePath;
+        }
         
-        file_put_contents($filePath, $txt_file);
+        unlink(self::$outputLocation);
+        $file = fopen(self::$outputLocation, 'w');
+        foreach (self::$currentLog as $msg) {
+            fputs($file, $msg."\n", strlen($msg."\n"));
+        }
+        
+        fclose($file);
     }
 }
