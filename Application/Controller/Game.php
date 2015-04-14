@@ -77,17 +77,19 @@ class Game {
         $this->setupStage();
         $this->dealCards();
         
+        $round = new Round();
+        
         $continueGame = true;
         while($continueGame && $this->roundNumber < 300000) {
-            $continueGame = $this->playRound();
+            $continueGame = $this->playRound($round);
+            $round->getPile(1)->getPile()->clearDeck();
+            $round->getPile(2)->getPile()->clearDeck();
         };
         
         if ($this->player1->getDeck()->getCount()) {
             Log::log('Game victor = Player 1');
-            echo "\n\n", 'Game victor = Player 1', "\n\n";
         } else {
             Log::log('Game victor = Player 2');
-            echo "\n\n", 'Game victor = Player 2', "\n\n";
         }
         
         Log::outputLog(__DIR__ . '/gameoutput.txt');
@@ -109,13 +111,15 @@ class Game {
             $playerVictor = 2;
         }
         
-        echo "\ncalculateRoundWinner\n";
-        echo "Round = ", $round->getRoundNumber(), "\n";
-        echo 'Player 1 top card = ', $player1Pile->getPile()->getTopCard(), "\n";
-        echo 'Player 2 top card = ', $player2Pile->getPile()->getTopCard(), "\n";
-        echo 'Player 1 = ', $this->player1->getDeck()->getCount(), ' ';
-        echo 'Player 2 = ', $this->player2->getDeck()->getCount(), "\n";
-        echo 'Player victor = ', $playerVictor, " ", $player1CardValue, " ", $player2CardValue, "\n";
+        Log::log("calculateRoundWinner");
+        Log::log('');
+        Log::log("Round = ". $round->getRoundNumber());
+        Log::log('Player 1 top card = '. $player1Pile->getPile()->getTopCard());
+        Log::log('Player 2 top card = '. $player2Pile->getPile()->getTopCard());
+        Log::log('Player 1 = '. $this->player1->getDeck()->getCount(). ' ' .
+        'Player 2 = '. $this->player2->getDeck()->getCount());
+        Log::log('Player victor = '. $playerVictor. " " . $player1CardValue.  " " . $player2CardValue);
+        Log::log('');
         
         return $playerVictor;
     }
@@ -188,8 +192,8 @@ class Game {
         $isRoundOver = false;
         $continueGame = true;
         
-        Log::log('Player 1 Card Count = ' . $this->player1->getDeck()->getCount());
-        Log::log('Player 2 Card Count = ' . $this->player2->getDeck()->getCount());
+//        Log::log('Player 1 Card Count = ' . $this->player1->getDeck()->getCount());
+//        Log::log('Player 2 Card Count = ' . $this->player2->getDeck()->getCount());
         
         
         try {
@@ -242,7 +246,6 @@ class Game {
                     $this->player2->winCards($player2Pile->getPile());
                     break;
             }
-            Log::log($round);
         } else {
             Log::log('The Game is a Draw');
         }
