@@ -86,10 +86,12 @@ class Game {
             $round->getPile(2)->getPile()->clearDeck();
         };
         
-        if ($this->player1->getDeck()->getCount()) {
+        if ($this->player1->getDeck()->getCount() == 0) {
             Log::log('Game victor = Player 1');
-        } else {
+        } elseif ($this->player2->getDeck()->getCount() == 0) {
             Log::log('Game victor = Player 2');
+        } else {
+            Log::log('Game unable to finish');
         }
         
         Log::outputLog(__DIR__ . '/gameoutput.txt');
@@ -126,17 +128,12 @@ class Game {
     
     public function doWar(Round $round) {
         $round->setRoundNumber($round->getRoundNumber() + 0.1);
-//        echo "\n", 'DoWar', "\n";
-//        echo 'Round ', $round->getRoundNumber(), "\n";
         
         $round->setWar(true);
         $victorNumber = 0;
         
         $player1Pile = $round->getPile(1);
         $player2Pile = $round->getPile(2);
-        
-//        echo 'Player 1 Pile before card count = ', $player1Pile->getPile()->getCount(), "\n";
-//        echo 'Player 2 Pile before card count = ', $player2Pile->getPile()->getCount(), "\n";
         
         $player1RunOutOfCards = false;
         $player2RunOutOfCards = false;
@@ -154,26 +151,11 @@ class Game {
             $player2RunOutOfCards = true;
         }
         
-//        echo 'Player 1 Pile after card count = ', $player1Pile->getPile()->getCount(), "\n";
-//        echo 'Player 2 Pile after card count = ', $player2Pile->getPile()->getCount(), "\n";
-        
         $victorNumber = $this->calculateRoundWinner($round);
         
-//            echo "\n", "Player Victor = ", $victorNumber, "\n";
-            
         if ($victorNumber === 0) {
             return $this->doWar($round);
         }
-        
-//        if ($player1RunOutOfCards and !$player2RunOutOfCards) {
-//            $victorNumber = 2;
-//        } else if (!$player1RunOutOfCards and $player2RunOutOfCards) {
-//            $victorNumber = 1;
-//        } else if ($player1RunOutOfCards and $player2RunOutOfCards) {
-//            $victorNumber = -1;
-//        }
-        
-//        echo "\nReturning victor number = ", $victorNumber, "\n";
         
         return $victorNumber;
     }
@@ -191,23 +173,12 @@ class Game {
         
         $isRoundOver = false;
         $continueGame = true;
-        
-//        Log::log('Player 1 Card Count = ' . $this->player1->getDeck()->getCount());
-//        Log::log('Player 2 Card Count = ' . $this->player2->getDeck()->getCount());
-        
-        
         try {
             $player1Pile->placeOnPile($this->player1->playCard());
-            //Log::log('Placing From Player 1 leaving cardCount = ' . $this->player1->getDeck()->getCount());
-            //Log::log($player1Pile->getPile()->getTopCard());
-
         } catch (\Application\Exception\DeckEmpty $ex) {}
 
         try {
             $player2Pile->placeOnPile($this->player2->playCard());
-
-            //Log::log('Placing From Player 2 leaving cardCount = ' . $this->player2->getDeck()->getCount());
-            //Log::log($player2Pile->getPile()->getTopCard());
 
         } catch (\Application\Exception\DeckEmpty $ex) {}
 
@@ -217,12 +188,9 @@ class Game {
         $victor = $this->calculateRoundWinner($round);
         if ($victor == 0) {
             Log::log('Starting war');
-//            echo "\n", 'Starting war', "\n";
             
             $victor = $this->doWar($round);
             
-//            echo "\nVictor = ", $victor, "\n";
-
             if ($victor) {
                 $round->setVictorNumber($victor);
             } elseif ($victor === 0) {
