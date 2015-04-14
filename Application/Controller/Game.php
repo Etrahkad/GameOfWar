@@ -78,9 +78,17 @@ class Game {
         $this->dealCards();
         
         $continueGame = true;
-        while($continueGame && $this->roundNumber < 100000) {
+        while($continueGame && $this->roundNumber < 300000) {
             $continueGame = $this->playRound();
         };
+        
+        if ($this->player1->getDeck()->getCount()) {
+            Log::log('Game victor = Player 1');
+            echo "\n\n", 'Game victor = Player 1', "\n\n";
+        } else {
+            Log::log('Game victor = Player 2');
+            echo "\n\n", 'Game victor = Player 2', "\n\n";
+        }
         
         Log::outputLog(__DIR__ . '/gameoutput.txt');
     }
@@ -101,11 +109,13 @@ class Game {
             $playerVictor = 2;
         }
         
-//        echo "\ncalculateRoundWinner\n";
-//        echo "Round = ", $round->getRoundNumber(), "\n";
-//        echo 'Player 1 top card = ', $player1Pile->getPile()->getTopCard(), "\n";
-//        echo 'Player 2 top card = ', $player2Pile->getPile()->getTopCard(), "\n";
-//        echo 'Player victor = ', $playerVictor, " ", $player1CardValue, " ", $player2CardValue, "\n";
+        echo "\ncalculateRoundWinner\n";
+        echo "Round = ", $round->getRoundNumber(), "\n";
+        echo 'Player 1 top card = ', $player1Pile->getPile()->getTopCard(), "\n";
+        echo 'Player 2 top card = ', $player2Pile->getPile()->getTopCard(), "\n";
+        echo 'Player 1 = ', $this->player1->getDeck()->getCount(), ' ';
+        echo 'Player 2 = ', $this->player2->getDeck()->getCount(), "\n";
+        echo 'Player victor = ', $playerVictor, " ", $player1CardValue, " ", $player2CardValue, "\n";
         
         return $playerVictor;
     }
@@ -145,21 +155,19 @@ class Game {
         
         $victorNumber = $this->calculateRoundWinner($round);
         
-        if (!$player1RunOutOfCards and !$player2RunOutOfCards) {
 //            echo "\n", "Player Victor = ", $victorNumber, "\n";
             
-            if ($victorNumber === 0) {
-                return $this->doWar($round);
-            }
+        if ($victorNumber === 0) {
+            return $this->doWar($round);
         }
         
-        if ($player1RunOutOfCards and !$player2RunOutOfCards) {
-            $victorNumber = 2;
-        } else if (!$player1RunOutOfCards and $player2RunOutOfCards) {
-            $victorNumber = 1;
-        } else if ($player1RunOutOfCards and $player2RunOutOfCards) {
-            $victorNumber = -1;
-        }
+//        if ($player1RunOutOfCards and !$player2RunOutOfCards) {
+//            $victorNumber = 2;
+//        } else if (!$player1RunOutOfCards and $player2RunOutOfCards) {
+//            $victorNumber = 1;
+//        } else if ($player1RunOutOfCards and $player2RunOutOfCards) {
+//            $victorNumber = -1;
+//        }
         
 //        echo "\nReturning victor number = ", $victorNumber, "\n";
         

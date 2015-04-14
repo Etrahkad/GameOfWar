@@ -45,7 +45,7 @@ class Dealer {
             $this->deck->setArray($deckOfCards);
         }
         
-        foreach (range(0, rand(1,3)) as $used) {
+        foreach (range(0, rand(5,10)) as $used) {
             $this->deck->shuffle();
         }
         
